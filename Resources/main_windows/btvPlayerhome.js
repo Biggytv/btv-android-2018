@@ -34,7 +34,8 @@ function btvPlayerhome() {
     
     var header = Ti.UI.createView({
 		backgroundColor : '#000000',
-		height : '10%',
+		height : '5%',
+		layout: 'horizontal'
 
 
     });
@@ -49,7 +50,7 @@ function btvPlayerhome() {
 
     var info = Ti.UI.createView({
         backgroundColor:  '#000000',
-        height: '5%',
+        height: '9%',
 
 
     });
@@ -72,27 +73,29 @@ function btvPlayerhome() {
  */  
     
     var headerImage = Ti.UI.createImageView({
-        image: '/images/BTV_Logo_Round_Black.png',
-        height: Ti.UI.FILL,
-        top: '1%',
-        left: '3%',
+        image: '/images/btv-logo-rectangle.png',
+        //width: '15%',
+        top: '2%',
+        left: '1%',
 
     });
 
     var titleView = Ti.UI.createView({
         backgroundColor: 'transparent',
-        left: '20%',
-        width: '61%'
+        //width: '85%',
+                left:'.05%',
+
     });
     
     var titleText = Ti.UI.createLabel({
         text: title,
         color: '#ffffff',
-        width: '100%',
+
+
         font: {
             fontFamily: 'MontserratBold',
             fontWeight: 'bold',
-            fontsize: '45dp'
+            fontsize: '25dp'
         }
     });
     
@@ -318,7 +321,7 @@ fullopenButton.addEventListener('click', function() {
         		font: {
           		  fontFamily: 'MontserratBold',
           		  fontWeight: 'bold',
-         		   fontsize: '7dp'
+         		   fontsize: '6dp'
       		  }
    		 });
 
@@ -610,7 +613,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
 
                 var channelView = Ti.UI.createView({
                     backgroundColor: 'transparent',
-                    width: '100%',
+                    width: '80%',
                     layout: 'vertical'
 
 
@@ -620,7 +623,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
 
 				var channelImage = Ti.UI.createImageView({
 					image: thumbDir+channelThumb,
-					width: '80%'
+					height: '50%'
 
 					});
 				
