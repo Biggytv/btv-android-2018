@@ -34,8 +34,8 @@ function btvPlayerhome() {
     
     var header = Ti.UI.createView({
 		backgroundColor : '#000000',
-		height : '5%',
-		layout: 'horizontal'
+		height : '10%',
+
 
 
     });
@@ -50,7 +50,9 @@ function btvPlayerhome() {
 
     var info = Ti.UI.createView({
         backgroundColor:  '#000000',
-        height: '9%',
+        height: '10%',
+        layout: 'vertical'
+
 
 
     });
@@ -74,7 +76,7 @@ function btvPlayerhome() {
     
     var headerImage = Ti.UI.createImageView({
         image: '/images/btv-logo-rectangle.png',
-        //width: '15%',
+        width: '25%',
         top: '2%',
         left: '1%',
 
@@ -82,20 +84,17 @@ function btvPlayerhome() {
 
     var titleView = Ti.UI.createView({
         backgroundColor: 'transparent',
-        //width: '85%',
-                left:'.05%',
+        //top: '2%',
 
     });
     
     var titleText = Ti.UI.createLabel({
         text: title,
         color: '#ffffff',
-
-
         font: {
             fontFamily: 'MontserratBold',
             fontWeight: 'bold',
-            fontsize: '25dp'
+            fontsize: '15dp'
         }
     });
     
@@ -272,7 +271,7 @@ fullopenButton.addEventListener('click', function() {
         xhr.open("GET",
             "http://cms.biggytv.com/mobile_resources/btvnowPlaying_web.php?cid=" +
             channel);
-        xhr.setTimeout(10000);
+        xhr.setTimeout(5000);
         xhr.send();
         xhr.onload = function() {
             var programInfo = JSON.parse(this.responseText);
@@ -294,23 +293,7 @@ fullopenButton.addEventListener('click', function() {
 */
 
 //Infosection
-
-            /////////Title View
-            var titleRow = Ti.UI.createTableViewRow({
-                backgroundColor: '#000000',
-                //height: '70dp',
-
-
-
-            });
-            var titleView = Ti.UI.createView({
-        		backgroundColor: 'transparent',
-        		//width: Ti.UI.FILL,
-        		height: '70dp',
-			    left: '4dp',
-			    right: '4dp',
-			    top: '0dp'
-            });
+	
 
             var titleLabel = Ti.UI.createLabel({
                 text: programInfo.title,
@@ -321,68 +304,11 @@ fullopenButton.addEventListener('click', function() {
         		font: {
           		  fontFamily: 'MontserratBold',
           		  fontWeight: 'bold',
-         		   fontsize: '6dp'
+         		   fontsize: '7dp'
       		  }
    		 });
 
-            
 
-
-            
-            ///////////Desc
-            var descRow = Ti.UI.createTableViewRow({
-                backgroundColor:  '#005580',
-			    height: '40%',
-			    top: '30%'
-
-
-
-            });
-            var descView = Ti.UI.createView({
-                backgroundColor: 'transparent',
-			    width: Ti.UI.FILL,
-			    left: '1%',
-			    right: '1%',
-
-
-
-
-                
-            });
-
-            var descLabel = Ti.UI.createLabel({
-                text: programInfo.description,
-        		color: '#FFFFFF',
-        		width: Ti.UI.FILL,
-        		height: Ti.UI.SIZE,
-        		top: '70%',
-        		wordWrap: true,
-
-                font: {
-                    fontFamily: 'MontserratRegular',
-                    fontWeight: 'bold',
-         		   fontsize: Ti.UI.FILL
-
-
-                }
-            });
-            descView.add(descLabel);
-            descRow.add(descView);
-
-            //Presenter
-            var copyrightRow = Ti.UI.createTableViewRow({
-            	backgroundColor: '#000000',
-            	height: '50dp'
-
-
-            });
-            var copyrightView = Ti.UI.createView({
-        		backgroundColor: 'transparent',
-        		//width: Ti.UI.FILL,
-        		//height: '70dp',
-			    left: '4dp',
-			    right: '4dp'
-            });
             
             var copyrightLabel = Ti.UI.createLabel({
                 text: 'Presented by: ' +programInfo.copyright,
@@ -402,158 +328,17 @@ fullopenButton.addEventListener('click', function() {
             });
 
 
-            /////////////Link///
-            var linkRow = Ti.UI.createTableViewRow({
-                backgroundColor: 'transparent',
-                height: '100dp'
 
+	info.add(titleLabel);
+	info.add(copyrightLabel);
 
-
-
-            });
-            var linkView = Ti.UI.createView({
-        		backgroundColor: 'transparent',
-			    width: Ti.UI.FILL,
-			    left: 10,
-			    right: 10,
-			    layout: 'vertical'
-
-            });
-
-            ///External Links
-            var watchnowImage = Ti.UI.createImageView({
-                image: 'appImages/watch_now_icon_blue_100.png',
-                width: Ti.UI.FILL,
-        		height: Ti.UI.SIZE,
-        		top: 4,
-        		right: 5,
-        		left: 5
-
-            });
-
-            var buyitnowImage = Ti.UI.createImageView({
-                image: 'appImages/buy_it_now_green_100.png',
-                width: Ti.UI.FILL,
-        		height: Ti.UI.SIZE,
-        		top: 4,
-        		right: 5,
-        		left: 5
-
-            });
-
-            var webImage = Ti.UI.createImageView({
-                image: 'appImages/www_icon_round_100.png',
-                width: Ti.UI.FILL,
-        		height: Ti.UI.SIZE,
-        		top: 4,
-        		right: 5,
-        		left: 5
-
-            });
-
-            var twitterImage = Ti.UI.createImageView({
-                image: 'appImages/twitter_icon_round_100.png',
-                width: Ti.UI.FILL,
-        		height: Ti.UI.SIZE,
-        		top: 4,
-        		right: 5,
-        		left: 5
-
-            });
-            var facebookImage = Ti.UI.createImageView({
-                image: 'appImages/facebook_icon_round_100.png',
-                width: Ti.UI.FILL,
-        		height: Ti.UI.SIZE,
-        		top: 4,
-        		right: 5,
-        		left: 5
-
-            });
-
-
-            if (programInfo.watchnow !== '0') {
-                linkView.add(watchnowImage);
-                var watchnowLink = programInfo.watchnow;
-            }
-
-            if (programInfo.buyitnowshort !== '0') {
-                linkView.add(buyitnowImage);
-                var buyitnowLink = programInfo.buyitnow;
-            }
-
-
-            if (programInfo.twitter !== '0') {
-                linkView.add(twitterImage);
-                var twitterLink = 'https://twitter.com/' +
-                    programInfo.twitter;
-            }
-            if (programInfo.facebook !== '0') {
-                linkView.add(facebookImage);
-                var facebookLink = 'https://facebook.com/' +
-                    programInfo.facebook;
-            }
-
-//Add Copyright and Link Images
-// REMOVED SEPARATE LABELS IN ROW;  COMBINE TITLE WITH COPYRIGHT
-
-
-	titleView.add(titleLabel);
-	titleView.add(copyrightLabel);
-    titleRow.add(titleView);
+	};
 	
 
-	//copyrightView.add(copyrightLabel);
-	// copyrightRow.add(linkView);
-	//copyrightRow.add(copyrightView);
 
-            var dataArray = [];
-            dataArray = [
-                titleRow,
-                //descRow,
-                copyrightRow,
-                //linkRow,
-            ];
-            showTable.setData(dataArray);
-            //Ti.API.info(dataArray);
-      
-//Links
-
-            watchnowImage.addEventListener('click', function(e) {
-				//tracker.addScreenView(watchnowLink);
-                Titanium.Platform.openURL(watchnowLink);
-            });
+	}
 
 
-
-            buyitnowImage.addEventListener('click', function(e) {
-				//tracker.addScreenView(buyitnowLink);
-                Titanium.Platform.openURL(buyitnowLink);
-            });
-
-            twitterImage.addEventListener('click', function(e) {
-			//tracker.addScreenView(twitterLink);
-                Titanium.Platform.openURL(twitterLink);
-            });
-
-            facebookImage.addEventListener('click', function(e) {
-			//	tracker.addScreenView(facebookLink);
-                Titanium.Platform.openURL(facebookLink);
-            });
-
-
-
-
-        };
-    }
-    var showTable = Ti.UI.createTableView({
-        backgroundColor: '#ffffff',
-        separatorColor: '#dfdfdf',
-        //height: Ti.UI.FILL
-        height: '100%',
-        layout: 'vertical'
-
-    });
-    info.add(showTable);
     ///////////////Add Showinfo End/////////////////////
     //perform initial table refresh
     refreshView(channel);
@@ -569,7 +354,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
         channelList.open("GET",
             "https://www.biggytv.com/btvChannels/showinfo/btvChannelsjsonmobile.php"
         );
-        channelList.setTimeout(10000);
+        channelList.setTimeout(5000);
         channelList.send();
         channelList.onload = function() {
             var channelJSON = JSON.parse(this.responseText);
@@ -584,9 +369,10 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                 var rating = channelJSON[i].dart_rating;
                 var xml_playlist = channelJSON[i].xml_playlist;
                 var parenttitle = channelJSON[i].parent_title;
-                var current = channelJSON[i].current;
+                //var current = channelJSON[i].current;
                 var channelColor = channelJSON[i].channel_color;
                 var channelThumb = channelJSON[i].thumbnail_2;
+                var programTitle = channelJSON[i].program_title;
                 //Ti.API.info("Channel Number: " + channel);
                 //            Ti.API.info(parenttitle);
                 /////////Channel Number View
@@ -599,7 +385,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                     channel: channeltitle,
                     playlist: xml_playlist,
                     category: appcategory,
-                    nowplaying: current,
+                    nowplaying: programTitle,
                     backgroundColor: '#000000',
                     backgroundSelectedColor: '#efefef',
                     selectedColor: '#000000',
@@ -613,7 +399,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
 
                 var channelView = Ti.UI.createView({
                     backgroundColor: 'transparent',
-                    width: '80%',
+                    width: '70%',
                     layout: 'vertical'
 
 
@@ -623,7 +409,8 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
 
 				var channelImage = Ti.UI.createImageView({
 					image: thumbDir+channelThumb,
-					height: '50%'
+					//width: Ti.UI.FILL,
+					height: '70%'
 
 					});
 				
@@ -633,19 +420,38 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                         "/" + channeltitle + " " +
                         ": " + rating,
                     color: '#ffffff',
-                    height: '60%',
+                    top: '1%',
                     //left: '3%',
                     font: {
                         fontFamily: 'MontserratRegular',
                         fontWeight: 'bold',
-                        fontSize: '20dp'
+                        fontSize: '10dp'
                     },
                     allowsSelection: 'true',
                     touchEnabled: 'false'
                 });
+                
+                var channelOnnow = Ti.UI.createLabel({
+                	text: programTitle,
+                	color: '#ffffff',
+                    wordWrap: true,
+                    top: '1%',
+                    //left: '3%',
+                    font: {
+                        fontFamily: 'MontserratRegular',
+                        fontWeight: 'bold',
+                        fontSize: '15dp'
+                    },
+                    allowsSelection: 'true',
+                    touchEnabled: 'false'
+                		
+                });
+                	
+                	
 
 				channelView.add(channelImage);
 				channelView.add(channelLabel);
+				channelView.add(channelOnnow);
 
 
                 channelRow.add(channelView);
@@ -660,10 +466,10 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
             backgroundColor: 'transparent',
             separatorColor: '#969090',
             //layout: 'horizontal',
-            borderColor: 'black',
+            borderColor: '#969090',
             borderRadius: 3,
-            borderWidth: 1,
-            minRowHeight: '50dp',
+            borderWidth: 2,
+            minRowHeight: '20dp',
             allowsSelection: 'true'
         });
 
@@ -675,9 +481,10 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
             //Ti.API.info(e.rowData.number + "-" + e.rowData.category + "/" + e.rowData.parent + ":" + e.rowData.channeltitle);
             //Ti.API.info(e.rowData.playlist);
             Ti.App.fireEvent('remove', {});
-            refreshView(e.rowData.playlist);
-            btvPlayerLoad(e.rowData.playlist);
             channel = e.rowData.playlist;
+            refreshView(channel);
+            btvPlayerLoad(e.rowData.playlist);
+            Ti.API.info(channel);///01-11 Start Here Program Info not changing on channel selection
             titleText.text = channelheader;
 
 // TODO Add event here for channel selections
