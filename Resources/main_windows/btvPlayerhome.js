@@ -49,7 +49,7 @@ function btvPlayerhome() {
 
     var info = Ti.UI.createView({
         backgroundColor:  '#000000',
-        height: '7%',
+        height: '5%',
 
 
     });
@@ -274,8 +274,8 @@ fullopenButton.addEventListener('click', function() {
         xhr.onload = function() {
             var programInfo = JSON.parse(this.responseText);
 //            Ti.API.info(programInfo.description);
-//            Ti.API.info(programInfo.copyright);
-//            Ti.API.info(programInfo.title);
+            Ti.API.info(programInfo.copyright);
+            Ti.API.info(programInfo.title);
 //            Ti.API.info(programInfo.twitter);                                    
 //            Ti.API.info(programInfo.facebook);
 //            Ti.API.info(programInfo.program);
@@ -295,14 +295,14 @@ fullopenButton.addEventListener('click', function() {
             /////////Title View
             var titleRow = Ti.UI.createTableViewRow({
                 backgroundColor: '#000000',
-                height: '70dp',
-                layout: 'vertical'
+                //height: '70dp',
+
 
 
             });
             var titleView = Ti.UI.createView({
         		backgroundColor: 'transparent',
-        		width: Ti.UI.FILL,
+        		//width: Ti.UI.FILL,
         		height: '70dp',
 			    left: '4dp',
 			    right: '4dp',
@@ -314,7 +314,6 @@ fullopenButton.addEventListener('click', function() {
         		color: '#ffffff',
         		top: '0dp',
         		width: Ti.UI.FILL,
-        		height: '50dp',
         		wordWrap: true,
         		font: {
           		  fontFamily: 'MontserratBold',
@@ -370,22 +369,23 @@ fullopenButton.addEventListener('click', function() {
             //Presenter
             var copyrightRow = Ti.UI.createTableViewRow({
             	backgroundColor: '#000000',
-            	height: '10dp'
+            	height: '50dp'
 
 
             });
             var copyrightView = Ti.UI.createView({
         		backgroundColor: 'transparent',
-			    width: Ti.UI.FILL,
-			    left: '1dp',
-			    right: '1dp',
+        		//width: Ti.UI.FILL,
+        		//height: '70dp',
+			    left: '4dp',
+			    right: '4dp'
             });
             
             var copyrightLabel = Ti.UI.createLabel({
                 text: 'Presented by: ' +programInfo.copyright,
         		color: '#ffffff',
-        		top: '48dp',
-        		height: '20dp',
+        		//top: '48dp',
+        		//height: '20dp',
         		//width: Ti.UI.FILL,
         		//height: Ti.UI.SIZE,
         		//wordWrap: true,
@@ -545,7 +545,9 @@ fullopenButton.addEventListener('click', function() {
     var showTable = Ti.UI.createTableView({
         backgroundColor: '#ffffff',
         separatorColor: '#dfdfdf',
-        height: Ti.UI.FILL
+        //height: Ti.UI.FILL
+        height: '100%',
+        layout: 'vertical'
 
     });
     info.add(showTable);
