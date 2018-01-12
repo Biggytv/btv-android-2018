@@ -33,33 +33,38 @@ function btvPlayerhome() {
 
     
     var header = Ti.UI.createView({
-		backgroundColor : '#000000',
-		height : '10%',
+		backgroundColor : '#ffffff',
+		height : '5%',
+		width: '95%'
 
 
 
     });
 
     var body = Ti.UI.createView({
-        backgroundColor: '#000000',
-        height: '40%',
+        backgroundColor: '#ffffff',
+        height: '30%',
+        //width: '95%'
 
 
 
     });
 
     var info = Ti.UI.createView({
-        backgroundColor:  '#000000',
+        backgroundColor:  '#ffffff',
+        top: '1%',
         height: '10%',
-        layout: 'vertical'
+		width: '95%',
 
 
 
     });
 
     var channels = Ti.UI.createView({
-        backgroundColor: '#000000',
-        height: '40%',
+        backgroundColor: '#ffffff',
+        top: '1%',
+        height: '50%',
+		width: '95%'
 
 
     });
@@ -90,7 +95,7 @@ function btvPlayerhome() {
     
     var titleText = Ti.UI.createLabel({
         text: title,
-        color: '#ffffff',
+        color: '#000000',
         font: {
             fontFamily: 'MontserratBold',
             fontWeight: 'bold',
@@ -115,77 +120,7 @@ function btvPlayerhome() {
     header.add(titleView);
     btvPlayer.add(header);
 
-    function btvPlayerLoad(channel) {
-
-        //////////////////////PLAYER START/////
-
-        var streamHeader = "http://btvcdneast1.biggytv.com:8081/live/";
-        var streamSuffix = "/playlist.m3u8";
-        var contentURL = streamHeader + channel + streamSuffix;
-       // Ti.API.info(contentURL);
-        var wp = Titanium.Media.createVideoPlayer({
-            top: 2,
-            //height: Ti.UI.SIZE,
-            //width: Ti.UI.Fill,
-            url: contentURL,
-            backgroundColor: '#000000',
-            barColor: '#A7D6FF',
-            scalingMode: Titanium.Media.VIDEO_SCALING_ASPECT_FILL,
-            mediaTypes: Titanium.Media.VIDEO_MEDIA_TYPE_VIDEO,
-            sourceType: Titanium.Media.VIDEO_SOURCE_TYPE_STREAMING,
-              fullscreen: false,
-            	  volume: 0.3,
-            	autoplay: true,
-        });
-
-        wp.orientationModes = [
-            Ti.UI.PORTRAIT
-        ];
-
-        var actindImage = Ti.UI.createImageView({
-            layout: 'horizontal',
-            gif: '/appImages/BTV_Loading_Indicator_01_150.gif',
-            top: '35%',
-            width: '20%'
-        });
-        
-        body.add(wp);
-        //body.add(actindImage);
-        //wp.play();
-
-        //Pause video player when other tabs are selected
-        Ti.App.addEventListener('video_pause', function() {
-            wp.pause();
-        });
-
-
-        //When application is put on pause do this  Application closed//
-        Ti.App.addEventListener('pause', function() {
-            wp.pause();
-            //btvPlayer.close();
-            //clearInterval(timer);
-        });
-
-        //When application resumes.
-        Ti.App.addEventListener('resume', function() {
-            wp.play();
-            btvPlayerLoad(channel);
-        });
-
-        //Remove player when changing channels
-        Ti.App.addEventListener('remove', function() {
-            body.remove(wp);
-        });
-
-    }
-
-
-
-
-
-
-    btvPlayerLoad(channel);
-
+ 
 
 
 
@@ -265,11 +200,11 @@ fullopenButton.addEventListener('click', function() {
     
     
     /////////////SHOW INFO START///////
-    function refreshView(channel) {
+    function refreshInfo(channel) {
  
         var xhr = Titanium.Network.createHTTPClient();
         xhr.open("GET",
-            "http://cms.biggytv.com/mobile_resources/btvnowPlaying_web.php?cid=" +
+            "https://cms.biggytv.com/mobile_resources/btvnowPlaying_web.php?cid=" +
             channel);
         xhr.setTimeout(5000);
         xhr.send();
@@ -295,56 +230,83 @@ fullopenButton.addEventListener('click', function() {
 //Infosection
 	
 
+            /////////Title View
+            var titleRow = Ti.UI.createTableViewRow({
+                backgroundColor: 'transparent',
+                width: '80%',
+                height: '15%'
+            });
+            var titleView = Ti.UI.createView({
+                backgroundColor: 'transparent',
+                height: 'auto',
+            });
             var titleLabel = Ti.UI.createLabel({
                 text: programInfo.title,
-        		color: '#ffffff',
-        		top: '0dp',
-        		width: Ti.UI.FILL,
-        		wordWrap: true,
-        		font: {
-          		  fontFamily: 'MontserratBold',
-          		  fontWeight: 'bold',
-         		   fontsize: '7dp'
-      		  }
-   		 });
-
-
-            
-            var copyrightLabel = Ti.UI.createLabel({
-                text: 'Presented by: ' +programInfo.copyright,
-        		color: '#ffffff',
-        		//top: '48dp',
-        		//height: '20dp',
-        		//width: Ti.UI.FILL,
-        		//height: Ti.UI.SIZE,
-        		//wordWrap: true,
+                color: '#000000',
+                left: '2%',
                 font: {
                     fontFamily: 'MontserratRegular',
                     fontWeight: 'bold',
-         		   fontsize: '10dp'
+                    fontSize: '12dp'
+
+
+                },
+            });
+            titleView.add(titleLabel);
+            titleRow.add(titleView);
+
+
+            //Presenter
+            var copyrightRow = Ti.UI.createTableViewRow({
+                backgroundColor: 'transparent',
+                height: '10%',
+                width: '80%',
+
+            });
+            var copyrightView = Ti.UI.createView({
+                backgroundColor: 'transparent',
+                height: 'auto'
+            });
+            var copyrightLabel = Ti.UI.createLabel({
+                text: "Presented by: " + programInfo.copyright,
+                color: '#ffffff',
+                left: '2%',
+                font: {
+                    fontFamily: 'MontserratRegular',
+                    fontWeight: 'bold',
+                    fontsize: '12dp'
 
 
                 }
             });
+            copyrightView.add(copyrightLabel);
+            copyrightRow.add(copyrightView);
+            
+            var dataArray = [];
+            dataArray = [
+                titleRow,
+                //descRow,
+                copyrightRow,
+                //linkRow,
+            ];
+            showTable.setData(dataArray);
 
-
-
-	info.add(titleLabel);
-	info.add(copyrightLabel);
-
-	};
-	
-
-
+		};
 	}
 
+    var showTable = Ti.UI.createTableView({
+        backgroundColor: '#000000',
+        separatorColor: 'transparent',
+
+    });
+    info.add(showTable);
 
     ///////////////Add Showinfo End/////////////////////
     //perform initial table refresh
-    refreshView(channel);
+    refreshInfo(channel);
     //check every 2 seconds for updates
     var timer = setInterval(function() {
-        refreshView(channel);
+        refreshInfo(channel);
     }, 15000);
 
 var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
@@ -369,7 +331,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                 var rating = channelJSON[i].dart_rating;
                 var xml_playlist = channelJSON[i].xml_playlist;
                 var parenttitle = channelJSON[i].parent_title;
-                //var current = channelJSON[i].current;
+                var current = channelJSON[i].current;
                 var channelColor = channelJSON[i].channel_color;
                 var channelThumb = channelJSON[i].thumbnail_2;
                 var programTitle = channelJSON[i].program_title;
@@ -386,9 +348,10 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                     playlist: xml_playlist,
                     category: appcategory,
                     nowplaying: programTitle,
-                    backgroundColor: '#000000',
+                    backgroundColor: '#ffffff',
                     backgroundSelectedColor: '#efefef',
                     selectedColor: '#000000',
+                    layout: 'vertical'
                     
 
 
@@ -419,7 +382,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                     text: channelnumber + "-" + appcategory +
                         "/" + channeltitle + " " +
                         ": " + rating,
-                    color: '#ffffff',
+                    color: '#000000',
                     top: '1%',
                     //left: '3%',
                     font: {
@@ -433,9 +396,10 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                 
                 var channelOnnow = Ti.UI.createLabel({
                 	text: programTitle,
-                	color: '#ffffff',
+                	color: '#000000',
                     wordWrap: true,
                     top: '1%',
+                    width: '90%',
                     //left: '3%',
                     font: {
                         fontFamily: 'MontserratRegular',
@@ -449,12 +413,14 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
                 	
                 	
 
-				channelView.add(channelImage);
-				channelView.add(channelLabel);
-				channelView.add(channelOnnow);
+				//channelView.add(channelImage);
+				//channelView.add(channelLabel);
+				//channelView.add(channelOnnow);
 
 
-                channelRow.add(channelView);
+                channelRow.add(channelImage);
+                channelRow.add(channelLabel);
+                channelRow.add(channelOnnow);
 
                 channeldataArray.push(channelRow);
 
@@ -463,7 +429,7 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
             channelTable.setData(channeldataArray);
         };
         var channelTable = Ti.UI.createTableView({
-            backgroundColor: 'transparent',
+            backgroundColor: '#efefef',
             separatorColor: '#969090',
             //layout: 'horizontal',
             borderColor: '#969090',
@@ -477,15 +443,17 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
             var channelheader = [];
             channelheader = e.rowData.number + "-" + e.rowData.category +
                 "/" + e.rowData.channel;
+            titleText.text = channelheader;
 
             //Ti.API.info(e.rowData.number + "-" + e.rowData.category + "/" + e.rowData.parent + ":" + e.rowData.channeltitle);
             //Ti.API.info(e.rowData.playlist);
             Ti.App.fireEvent('remove', {});
-            channel = e.rowData.playlist;
-            refreshView(channel);
+
+            //channel = e.rowData.playlist;
+            refreshInfo(e.rowData.playlist);
             btvPlayerLoad(e.rowData.playlist);
-            Ti.API.info(channel);///01-11 Start Here Program Info not changing on channel selection
-            titleText.text = channelheader;
+            //Ti.API.info(channel);///01-11 Start Here Program Info not changing on channel selection
+
 
 // TODO Add event here for channel selections
 
@@ -508,6 +476,82 @@ var thumbDir="https://dnbl0is1p0z28.cloudfront.net/mobilethumbs/";
         channelLoad();
     }, 3600000);
     ////////////CHANNEL LOAD END/////////
+    
+       function btvPlayerLoad(channel) {
+
+        //////////////////////PLAYER START/////
+
+        var streamHeader = "http://btvcdneast1.biggytv.com:8081/live/";
+        var streamSuffix = "/playlist.m3u8";
+        var contentURL = streamHeader + channel + streamSuffix;
+       // Ti.API.info(contentURL);
+        var wp = Titanium.Media.createVideoPlayer({
+            top: 2,
+            //height: Ti.UI.SIZE,
+            //width: Ti.UI.Fill,
+            url: contentURL,
+            backgroundColor: '#000000',
+            barColor: '#A7D6FF',
+            scalingMode: Titanium.Media.VIDEO_SCALING_RESIZE_ASPECT_FILL,
+            mediaTypes: Titanium.Media.VIDEO_MEDIA_TYPE_VIDEO,
+            sourceType: Titanium.Media.VIDEO_SOURCE_TYPE_STREAMING,
+            mediaControlStyle: Titanium.Media.VIDEO_CONTROL_NONE,
+              fullscreen: false,
+            	  volume: 0.3,
+            	autoplay: true,
+        });
+
+        wp.orientationModes = [
+            Ti.UI.PORTRAIT
+        ];
+
+        var actindImage = Ti.UI.createImageView({
+            layout: 'horizontal',
+            gif: '/appImages/BTV_Loading_Indicator_01_150.gif',
+            top: '35%',
+            width: '20%'
+        });
+        
+        body.add(wp);
+        //body.add(actindImage);
+        //wp.play();
+
+        //Pause video player when other tabs are selected
+        Ti.App.addEventListener('video_pause', function() {
+            wp.pause();
+        });
+
+
+        //When application is put on pause do this  Application closed//
+        Ti.App.addEventListener('pause', function() {
+            wp.pause();
+            //btvPlayer.close();
+            //clearInterval(timer);
+        });
+
+        //When application resumes.
+        Ti.App.addEventListener('resume', function() {
+            wp.play();
+            btvPlayerLoad(channel);
+        });
+
+        //Remove player when changing channels
+        Ti.App.addEventListener('remove', function() {
+            body.remove(wp);
+        });
+
+    }
+
+
+
+
+
+
+    btvPlayerLoad(channel);
+
+    
+    
+    
     btvPlayer.add(header);
     btvPlayer.add(body);
     btvPlayer.add(info);
